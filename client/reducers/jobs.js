@@ -5,7 +5,7 @@ import {
   FETCH_POPULAR_JOBS_REQUEST,
   FETCH_POPULAR_JOBS_SUCCESS,
   FETCH_POPULAR_JOBS_FAILURE,
-} from '../actions/jobs';
+} from '../constants/actionTypes';
 
 export const initialState = {
   nearbyJobs: {
