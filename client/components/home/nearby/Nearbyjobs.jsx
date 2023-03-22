@@ -2,9 +2,11 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { useRouter } from 'expo-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchNearbyJobs } from '../../../actions/jobs'
+import debounce from 'lodash.debounce'
 
 import styles from './nearbyjobs.style'
 import { COLORS } from '../../../constants'
+import NearbyjobsSkeleton from '../../common/skeleton/NearbyjobsSkeleton'
 import NearbyJobCard from '../../common/cards/nearby/NearbyJobCard'
 import useFetch from '../../../hook/useFetch'
 import { useEffect } from 'react'
@@ -17,9 +19,9 @@ const Nearbyjobs = () => {
   // })
 
   const dispatch = useDispatch()
-  const { data, isLoading, error } = useSelector((state) => state.jobs.nearbyJobs)
+  const { data, error } = useSelector((state) => state.jobs.nearbyJobs)
 
-  useEffect(() => {
+  const fetchData = debounce(() => {
     dispatch(fetchNearbyJobs({
       endpoint: 'search',
       query: {
@@ -27,6 +29,10 @@ const Nearbyjobs = () => {
         num_pages: 1
       }
     }))
+  }, 5000)
+
+  useEffect(() => {
+    fetchData()
   }, [dispatch])
   
   return (
@@ -40,11 +46,9 @@ const Nearbyjobs = () => {
 
       <View style={styles.cardsContainer}>
         {
-          isLoading ? (
-            <ActivityIndicator size="large" colors={COLORS.primary}></ActivityIndicator>
-          ) : error ? (
-            <Text>Something went wrong</Text>
-          ) : (
+          error ? (
+              <Text>Something went wrong</Text>
+          ) : data.length ? (
             data?.map((job) => (
               <NearbyJobCard 
                 job={job}
@@ -52,6 +56,8 @@ const Nearbyjobs = () => {
                 handleNavigate={() => router.push(`/job-details/${job.job_id}`)}
               />
             ))
+            ) : (
+              <NearbyjobsSkeleton />
           )
         }
       </View>
