@@ -7,13 +7,13 @@ import {
   FETCH_POPULAR_JOBS_REQUEST,
   FETCH_POPULAR_JOBS_SUCCESS,
   FETCH_POPULAR_JOBS_FAILURE
-} from '../actions/jobs'
+} from '../constants/actionTypes'
 
 // fix to env
 const RAPID_API_KEY = 'env'
 
 export const fetchNearbyJobs = ({ endpoint, query }) => {
-  return async (dispatch) => {
+return async (dispatch) => {
     dispatch({ type: FETCH_NEARBY_JOBS_REQUEST })
 
     const options = {
