@@ -5,7 +5,7 @@ import {
   FETCH_POPULAR_JOBS_REQUEST,
   FETCH_POPULAR_JOBS_SUCCESS,
   FETCH_POPULAR_JOBS_FAILURE,
-} from '../constants/actionTypes';
+} from '../constants/actionTypes'
 
 export const initialState = {
   nearbyJobs: {
@@ -20,7 +20,7 @@ export const initialState = {
   }
 }
 
-const jobsReducer = (state = initialState, action) => {
+const jobs = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_NEARBY_JOBS_REQUEST: 
       return {
@@ -81,4 +81,4 @@ const jobsReducer = (state = initialState, action) => {
   }
 }
 
-export default jobsReducer
+export default jobs

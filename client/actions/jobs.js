@@ -9,22 +9,23 @@ import {
   FETCH_POPULAR_JOBS_FAILURE
 } from '../constants/actionTypes'
 
-// fix to env
-const RAPID_API_KEY = 'env'
+import { RAPID_API_KEY } from "@env" 
+
+const rapidApiKey = RAPID_API_KEY
 
 export const fetchNearbyJobs = ({ endpoint, query }) => {
-return async (dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: FETCH_NEARBY_JOBS_REQUEST })
 
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': RAPID_API_KEY,
+        'X-RapidAPI-Key': rapidApiKey,
         'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
       },
       url: `https://jsearch.p.rapidapi.com/${endpoint}`,
       params: { ...query }
-    };
+    }
 
     try {
       const response = await axios.request(options)
@@ -46,12 +47,12 @@ export const fetchPopularJobs = ({ endpoint, query }) => {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': RAPID_API_KEY,
+        'X-RapidAPI-Key': rapidApiKey,
         'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
       },
       url: `https://jsearch.p.rapidapi.com/${endpoint}`,
       params: { ...query }
-    };
+    }
 
     try {
       const response = await axios.request(options)

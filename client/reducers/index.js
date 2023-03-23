@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import jobsReducer from './jobs'
+import jobs from './jobs'
 
-const reducers = combineReducers({ jobs: jobsReducer })
+const reducers = combineReducers({ jobs })
 
 export default reducers
