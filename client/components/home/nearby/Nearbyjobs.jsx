@@ -1,27 +1,24 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
-import { useRouter } from 'expo-router'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchNearbyJobs } from '../../../actions/jobs'
+import { useRouter } from 'expo-router'
+import { View, Text, TouchableOpacity } from 'react-native'
 import debounce from 'lodash.debounce'
 
 import styles from './nearbyjobs.style'
-import { COLORS } from '../../../constants'
+
 import NearbyjobsSkeleton from '../../common/skeleton/NearbyjobsSkeleton'
 import NearbyJobCard from '../../common/cards/nearby/NearbyJobCard'
-import useFetch from '../../../hook/useFetch'
-import { useEffect } from 'react'
+
+import { fetchNearbyJobs } from '../../../actions/jobs'
 
 const Nearbyjobs = () => {
   const router = useRouter()
-  // const { data, isLoading, error } = useFetch('search', {
-  //   query: 'React Native developer',
-  //   num_pages: 1
-  // })
 
   const dispatch = useDispatch()
   const { data, error } = useSelector((state) => state.jobs.nearbyJobs)
 
-  const fetchData = debounce(() => {
+  const fetchData
+   = debounce(() => {
     dispatch(fetchNearbyJobs({
       endpoint: 'search',
       query: {

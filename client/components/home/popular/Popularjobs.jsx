@@ -1,21 +1,16 @@
-import { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
-import { useRouter } from 'expo-router'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPopularJobs } from '../../../actions/jobs'
+import { useRouter } from 'expo-router'
+import { View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 
 import styles from './popularjobs.style'
 import { COLORS, SIZES } from '../../../constants'
+
 import PopularJobCard from '../../common/cards/popular/PopularJobCard'
-import useFetch from '../../../hook/useFetch'
+import { fetchPopularJobs } from '../../../actions/jobs'
 
 const Popularjobs = () => {
   const router = useRouter()
-  // const { data, isLoading, error } = useFetch
-  // ('search', {
-  //   query: 'React developer',
-  //   num_pages: 1
-  // })
   const dispatch = useDispatch()
 
   const { isLoading, data, error }  = useSelector((state) => state.jobs.popularJobs)
@@ -27,7 +22,7 @@ const Popularjobs = () => {
     setSelectedJob(item.job_id)    
   }
 
-  useEffect(() => {
+  const fetchData = () =>  {
     dispatch(fetchPopularJobs({ 
       endpoint: 'search', 
       query: {
@@ -35,6 +30,10 @@ const Popularjobs = () => {
         num_pages: 1
       }
     }))
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [dispatch])
 
   return (
