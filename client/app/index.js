@@ -8,7 +8,8 @@ import {
   Nearbyjobs,
   Popularjobs,
   ScreenHeaderBtn,
-  Welcome
+  Welcome,
+  Menu
 } from '../components'
 import store from '../state/store'
 
@@ -32,6 +33,9 @@ const Home = () => {
             headerTitle: ""
           }}
           />
+        <Menu />
+        {/* side menu */}
+        
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
