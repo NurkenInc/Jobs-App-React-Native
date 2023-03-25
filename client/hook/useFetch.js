@@ -10,10 +10,11 @@ const useFetch = (endpoint, query) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
+  //
+  
   const options = {
     method: 'GET',
     headers: {
-      // fix env
       'X-RapidAPI-Key': rapidApiKey,
       'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
     },
