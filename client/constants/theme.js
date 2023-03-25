@@ -22,7 +22,7 @@ const SIZES = {
   medium: 16,
   large: 20,
   xLarge: 24,
-  xxLarge: 32,
+  xxLarge: 52,
 };
 
 const SHADOWS = {
