@@ -17,6 +17,8 @@ export const fetchNearbyJobs = ({ endpoint, query }) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_NEARBY_JOBS_REQUEST })
 
+    // 
+
     const options = {
       method: 'GET',
       headers: {
