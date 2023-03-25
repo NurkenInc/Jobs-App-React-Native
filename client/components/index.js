@@ -4,7 +4,8 @@ import ScreenHeaderBtn from "./common/header/ScreenHeaderBtn";
 import Welcome from "./home/welcome/Welcome";
 import Nearbyjobs from "./home/nearby/Nearbyjobs";
 import Popularjobs from "./home/popular/Popularjobs";
-import Menu from './home/menu/Menu';
+import SideMenu from './home/sidemenu/SideMenu';
+import { default as HomeHeader} from './home/header/Header';
 
 // job details screen
 import Company from "./jobdetails/company/Company";
@@ -18,14 +19,15 @@ import NearbyJobCard from "./common/cards/nearby/NearbyJobCard";
 
 export {
   ScreenHeaderBtn,
-  Menu,
+  SideMenu,
   Welcome,
   Nearbyjobs,
   Popularjobs,
+  HomeHeader,
   Company,
   JobTabs,
   JobAbout,
   JobFooter,
   Specifics,
-  NearbyJobCard
+  NearbyJobCard,
 };
