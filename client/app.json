@@ -5,6 +5,14 @@
       "bundler": "metro"
     },
     "name": "client",
-    "slug": "client"
+    "slug": "client",
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ]
   }
 }
