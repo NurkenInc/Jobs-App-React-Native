@@ -1,19 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, FlatList, TouchableOpacity, Animated, Image } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, Animated } from 'react-native'
+import { useDispatch,  useSelector } from 'react-redux'
 
-import { ScreenHeaderBtn } from '../../index'
+import ScreenHeaderBtn from '../../common/header/ScreenHeaderBtn'
+import { closeSideMenu } from '../../../actions/sidemenu'
 
 import { icons } from '../../../constants'
 import styles from './sidemenu.style'
 
 const options = ['Profile', 'Popular Jobs', 'Nearby Jobs', 'Search Jobs']
 
-const SideMenu = ({ showSideMenu, toggleSideMenu, menuAnimation }) => {
+const SideMenu = () => {
   const [selectedOption, setSelectedOption] = useState('')
   const [isContainerClosed, setIsContainerClosed] = useState(true)
+  const { showSideMenu } = useSelector((state) => state.sidemenu)
+
+  const menuAnimation = useRef(new Animated.Value(-250)).current
+  const dispatch = useDispatch()
+  
+  const animateMenu = () => {
+    Animated.timing(menuAnimation, {
+      toValue: showSideMenu ? 0 : -250,
+      duration: 300,
+      useNativeDriver: true
+    }).start()
+  }
+
+  const closeMenu = () => {
+    dispatch(closeSideMenu())
+  }
 
   // if side menu was closed, we close outer container after sidemenu closing animation is done
-  useEffect(() => {
+  const setContainerState = () => {
     if(showSideMenu === false) {
       setTimeout(() => {
         setIsContainerClosed(true)
@@ -21,6 +39,11 @@ const SideMenu = ({ showSideMenu, toggleSideMenu, menuAnimation }) => {
     } else if(showSideMenu === true) {
       setIsContainerClosed(false)
     }
+  }
+
+  useEffect(() => {
+    setContainerState()
+    animateMenu()
   }, [showSideMenu])
 
   return (
@@ -31,7 +54,7 @@ const SideMenu = ({ showSideMenu, toggleSideMenu, menuAnimation }) => {
             <ScreenHeaderBtn
               iconUrl={icons.left}
               dimension="60%"
-              handlePress={toggleSideMenu}
+              handlePress={closeMenu}
             />
           </View>
           <FlatList
