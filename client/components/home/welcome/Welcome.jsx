@@ -8,15 +8,33 @@ import {
   FlatList 
 } from 'react-native'
 import { useRouter } from 'expo-router'
+import { useDispatch, useSelector } from 'react-redux'
 
 import styles from './welcome.style'
 import { icons, SIZES } from '../../../constants'
 
+import { closeSideMenu } from '../../../actions/sidemenu'
+
 const jobTypes = ['Full-time', 'Part-time', 'Contractor']
 
 const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
-  const router = useRouter()
   const [activeJobType, setActiveJobType] = useState('Full-time')
+  const { showSideMenu } = useSelector((state) => state.sidemenu)
+
+  const router = useRouter()
+  const dispatch = useDispatch()
+
+  const closeMenu = () => {
+    if(showSideMenu) {
+      dispatch(closeSideMenu())
+    }
+  }
+
+  const handleJobTypePress = (item) => {
+    setActiveJobType(item)
+    router.push(`../search/${item}`)
+    closeMenu()
+  }
 
   return (
     <View>
@@ -26,9 +44,10 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
       </View>
       <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
-          <TextInput 
+          <TextInput
             style={styles.searchInput}
             value={searchTerm}
+            onPressIn={closeMenu}
             onChangeText={(text) => setSearchTerm(text)}
             placeholder="What are you looking for?"
           />
@@ -50,8 +69,7 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
             <TouchableOpacity
               style={styles.tab(activeJobType, item)}
               onPress={() => {
-                setActiveJobType(item)
-                router.push(`../search/${item}`)
+                handleJobTypePress(item)
               }}
             >
               <Text style={styles.tabText(activeJobType, item)}>{item}</Text>
