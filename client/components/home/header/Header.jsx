@@ -1,18 +1,26 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, Image, Linking } from 'react-native'
+import { View } from 'react-native'
+import { useDispatch } from 'react-redux'
 
 import styles from './header.style'
 import { icons, images } from '../../../constants'
 
-import { ScreenHeaderBtn } from '../../index'
+import ScreenHeaderBtn from '../../common/header/ScreenHeaderBtn'
+import { openSideMenu } from '../../../actions/sidemenu'
 
-const Header = ({ toggleSideMenu }) => {
+const Header = () => {
+  const dispatch = useDispatch()
+
+  const openMenu = () => {
+    dispatch(openSideMenu())
+  }
+  
   return (
     <View style={styles.container}>
       <ScreenHeaderBtn 
         iconUrl={icons.menu}
         dimension='60%'
-        handlePress={toggleSideMenu}
+        handlePress={openMenu}
       />
       <ScreenHeaderBtn 
         iconUrl={images.profile}
