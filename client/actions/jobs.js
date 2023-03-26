@@ -9,20 +9,20 @@ import {
   FETCH_POPULAR_JOBS_FAILURE
 } from '../constants/actionTypes'
 
-import { RAPID_API_KEY } from "@env" 
+import { RAPID_JSEARCH_API_KEY } from "@env" 
 
-const rapidApiKey = RAPID_API_KEY
+const rapidJSearchApiKey = RAPID_JSEARCH_API_KEY
 
 export const fetchNearbyJobs = ({ endpoint, query }) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_NEARBY_JOBS_REQUEST })
 
-    // 
+    ////
 
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': rapidApiKey,
+        'X-RapidAPI-Key': rapidJSearchApiKey,
         'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
       },
       url: `https://jsearch.p.rapidapi.com/${endpoint}`,
@@ -49,7 +49,7 @@ export const fetchPopularJobs = ({ endpoint, query }) => {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': rapidApiKey,
+        'X-RapidAPI-Key': rapidJSearchApiKey,
         'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
       },
       url: `https://jsearch.p.rapidapi.com/${endpoint}`,
