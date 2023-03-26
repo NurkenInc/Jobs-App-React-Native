@@ -8,18 +8,27 @@ import { COLORS, SIZES } from '../../../constants'
 
 import PopularJobCard from '../../common/cards/popular/PopularJobCard'
 import { fetchPopularJobs } from '../../../actions/jobs'
+import { closeSideMenu } from '../../../actions/sidemenu'
 
 const Popularjobs = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
   const { isLoading, data, error }  = useSelector((state) => state.jobs.popularJobs)
+  const { showSideMenu } = useSelector((state) => state.sidemenu)
 
   const [selectedJob, setSelectedJob] = useState()
 
+  const closeMenu = () => {
+    if (showSideMenu) {
+      dispatch(closeSideMenu())
+    }
+  }
+
   const handleCardPress = (item) => {
     router.push(`../job-details/${item.job_id}`)
-    setSelectedJob(item.job_id)    
+    setSelectedJob(item.job_id)
+    closeMenu()
   }
 
   const fetchData = () =>  {
