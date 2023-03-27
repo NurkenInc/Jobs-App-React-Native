@@ -69,11 +69,7 @@ const Nearbyjobs = () => {
     try {
       const response = await axios.request(options)
 
-      if(response.data.address.country) {
-        setCountry(response.data.address.country)
-      } else {
-        setCountry('')
-      }
+      setCountry(response.data.address.country)
     } catch (error) {
       console.log(error)
     }
