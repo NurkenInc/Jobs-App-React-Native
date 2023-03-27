@@ -23,7 +23,7 @@ const Nearbyjobs = () => {
   const [location, setLocation] = useState({})
   const { data, error } = useSelector((state) => state.jobs.nearbyJobs)
   const { showSideMenu } = useSelector((state) => state.sidemenu)
-  
+
   const router = useRouter()
   const dispatch = useDispatch()
 
