@@ -7,7 +7,7 @@ import {
 } from '../constants/actionTypes'
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   permission: {
     granted: false,
     denied: false,
@@ -26,24 +26,27 @@ const locationPermission = (state = initialState, action) => {
     case LOCATION_PERMISSION_GRANTED:
       return {
         ...state,
+        isLoading: false,
         permission: {
           ...state.permission,
           granted: true,
           undetermined: false
-        }
+        },
       }
-    case LOCATION_PERMISSION_DENIED:
+      case LOCATION_PERMISSION_DENIED:
       return {
         ...state,
+        isLoading: false,
         permission: {
           ...state.permission,
           denied: true,
           undetermined: false
-        }
+        },
       }
-    case LOCATION_PERMISSION_UNDETERMINED:
+      case LOCATION_PERMISSION_UNDETERMINED:
       return {
         ...state,
+        isLoading: false,
         permission: {
           ...state.permission,
           undetermined: true
