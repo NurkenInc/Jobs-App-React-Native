@@ -10,11 +10,15 @@ export const getLocation = () => {
   return async (dispatch) => {
     dispatch({ type: FETCH_LOCATION_REQUEST })
 
+    console.log('f')
     try {
       const { coords } = await Location.getCurrentPositionAsync({})
 
+      console.log('p')
       const { latitude, longitude } = coords
 
+      console.log(latitude)
+      console.log(longitude)
       dispatch({
         type: FETCH_LOCATION_SUCCESS,
         payload: { latitude, longitude }
@@ -22,6 +26,7 @@ export const getLocation = () => {
 
     } catch (error) {
       dispatch({ type: FETCH_LOCATION_FAILURE, payload: error })
+      console.log('lat')
     }
   }
 }
