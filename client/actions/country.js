@@ -13,7 +13,6 @@ export const geocodeLocation = ({ lat, lon }) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_GEOCODE_REQUEST })
 
-    console.log(lat)
     try {
       const options = {
         method: 'GET',
