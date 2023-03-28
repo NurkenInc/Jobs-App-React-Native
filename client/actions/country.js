@@ -18,8 +18,8 @@ export const geocodeLocation = ({ lat, lon }) => {
         method: 'GET',
         url: 'https://forward-reverse-geocoding.p.rapidapi.com/v1/reverse',
         params: {
-          lat: '41.8755616',
-          lon: '-87.6244212',
+          lat: lat,
+          lon: lon,
           'accept-language': 'en',
           polygon_threshold: '0.0'
         },
