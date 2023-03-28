@@ -22,7 +22,6 @@ export const getLocationPermission = () => {
       } else {
         dispatch({ type: LOCATION_PERMISSION_UNDETERMINED })
       }
-
     } catch (error) {
       dispatch({ type: LOCATION_PERMISSION_FAILURE, payload: error })
     }  
