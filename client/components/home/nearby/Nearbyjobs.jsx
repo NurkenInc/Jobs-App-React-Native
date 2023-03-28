@@ -13,30 +13,47 @@ import NearbyJobCard from '../../common/cards/nearby/NearbyJobCard'
 
 import { fetchNearbyJobs } from '../../../actions/jobs'
 import { closeSideMenu } from '../../../actions/sidemenu'
+import { getLocationPermission } from '../../../actions/locationPermission'
+import { getLocation } from '../../../actions/location'
+import { geocodeLocation } from '../../../actions/country'
 
 import { RAPID_GEOCODE_API_KEY } from '@env'
 
 const rapidGeocodeApiKey = RAPID_GEOCODE_API_KEY
 
 const Nearbyjobs = () => {
-  const [country, setCountry] = useState('')
-  const [location, setLocation] = useState({})
-  const { data, error } = useSelector((state) => state.jobs.nearbyJobs)
+  // const [country, setCountry] = useState('')
+  // const [location, setLocation] = useState({})
+  const nearbyJobs = useSelector((state) => state.jobs.nearbyJobs)
+  const country = useSelector((state) => state.country)
+  const location = useSelector((state) => state.location)
+  const locationPermission = useSelector((state) => state.locationPermission)
   const { showSideMenu } = useSelector((state) => state.sidemenu)
 
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const fetchData
-   = debounce(() => {
+  const fetchJobs = debounce(() => {
     dispatch(fetchNearbyJobs({
       endpoint: 'search',
       query: {
-        query: `React Native developer ${country}`,
+        query: `React Native developer ${country.data}`,
         num_pages: 1
       }
     }))
   }, 5000)
+
+  const fetchCountry = async ({ lat, lon }) => {
+    dispatch(geocodeLocation({ lat, lon }))
+  }
+
+  const fetchLocationPermission = () => {
+    dispatch(getLocationPermission())
+  }
+
+  const fetchLocation = () => {
+    dispatch(getLocation())
+  }
 
   const closeMenu = () => {
     if (showSideMenu) {
@@ -49,56 +66,30 @@ const Nearbyjobs = () => {
     closeMenu()
   }
 
-  // rewrite location country logic to reducers and actions
-  const getCurrentCountry = async ({ lat, lon }) => {
-    const options = {
-      method: 'GET',
-      url: 'https://forward-reverse-geocoding.p.rapidapi.com/v1/reverse',
-      params: {
-        lat,
-        lon,
-        'accept-language': 'en',
-        polygon_threshold: '0.0'
-      },
-      headers: {
-        'X-RapidAPI-Key': rapidGeocodeApiKey,
-        'X-RapidAPI-Host': 'forward-reverse-geocoding.p.rapidapi.com'
-      }
+  // TODO: rewrite useEffects to HOC
+  useEffect(() => {
+    if(locationPermission.permission.granted) {
+      fetchLocation()
     }
-
-    try {
-      const response = await axios.request(options)
-
-      setCountry(response.data.address.country)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const getCurrentLocation = () => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync()
-
-      if(status !== 'granted') {
-        return
-      }
-
-      let location = await Location.getCurrentPositionAsync({})
-
-      const lat = location.coords.latitude
-      const lon = location.coords.longitude
-
-      setLocation({ lat, lon })
-    })()
-  }
+  }, [locationPermission.isLoading])
 
   useEffect(() => {
-    getCurrentLocation()
-    getCurrentCountry(location)
-  }, [])
+    if(Object.keys(location.data).length) {
+      console.log('go')
+      // not calling getLocation
+      fetchCountry(location.data)
+    }
+  }, [location.isLoading])
 
   useEffect(() => {
-    fetchData()
+    if(country.data) {
+      fetchJobs()
+    }
+  }, [country.isLoading])
+
+  useEffect(() => {
+    fetchLocationPermission()
+    fetchJobs()
   }, [dispatch])
   
   return (
@@ -112,10 +103,10 @@ const Nearbyjobs = () => {
 
       <View style={styles.cardsContainer}>
         {
-          error ? (
+          nearbyJobs.error ? (
               <Text>Something went wrong</Text>
-          ) : data.length ? (
-            data?.map((job) => (
+          ) : nearbyJobs.data.length ? (
+            nearbyJobs.data?.map((job) => (
               <NearbyJobCard 
                 job={job}
                 key={`nearby-job-${job?.job_id}`}
