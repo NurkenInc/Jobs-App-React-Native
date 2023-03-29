@@ -19,7 +19,6 @@ export const getLocation = () => {
         type: FETCH_LOCATION_SUCCESS,
         payload: { latitude, longitude }
       })
-
     } catch (error) {
       dispatch({ type: FETCH_LOCATION_FAILURE, payload: error })
     }

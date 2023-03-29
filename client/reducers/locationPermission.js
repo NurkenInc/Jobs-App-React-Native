@@ -26,12 +26,12 @@ const locationPermission = (state = initialState, action) => {
     case LOCATION_PERMISSION_GRANTED:
       return {
         ...state,
-        isLoading: false,
         permission: {
           ...state.permission,
           granted: true,
           undetermined: false
         },
+        isLoading: false
       }
       case LOCATION_PERMISSION_DENIED:
       return {

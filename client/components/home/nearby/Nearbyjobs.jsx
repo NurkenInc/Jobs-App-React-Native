@@ -68,6 +68,7 @@ const Nearbyjobs = () => {
 
   // TODO: rewrite useEffects to HOC
   useEffect(() => {
+    console.log(locationPermission.permission.granted)
     if(locationPermission.permission.granted) {
       fetchLocation()
     }
@@ -75,7 +76,6 @@ const Nearbyjobs = () => {
 
   useEffect(() => {
     if(Object.keys(location.data).length) {
-      console.log('go')
       // not calling getLocation
       fetchCountry(location.data)
     }
