@@ -46,6 +46,8 @@ export const fetchPopularJobs = ({ endpoint, query }) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_POPULAR_JOBS_REQUEST })
 
+    //
+
     const options = {
       method: 'GET',
       headers: {
