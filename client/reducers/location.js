@@ -11,7 +11,7 @@ const initialState = {
 }
 
 const location = (state = initialState, action) => {
-  switch (action) {
+  switch (action.type) {
     case FETCH_LOCATION_REQUEST:
       return {
         ...state,
