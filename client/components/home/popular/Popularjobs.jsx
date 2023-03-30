@@ -11,18 +11,23 @@ import { fetchPopularJobs } from '../../../actions/jobs'
 import { closeSideMenu } from '../../../actions/sidemenu'
 
 const Popularjobs = () => {
-  const router = useRouter()
-  const dispatch = useDispatch()
-
+  const [selectedJob, setSelectedJob] = useState()
+  const [jobQuery, setJobQuery] = useState('React developer')
   const { isLoading, data, error }  = useSelector((state) => state.jobs.popularJobs)
   const { showSideMenu } = useSelector((state) => state.sidemenu)
-
-  const [selectedJob, setSelectedJob] = useState()
+  
+  const router = useRouter()
+  const dispatch = useDispatch()
 
   const closeMenu = () => {
     if (showSideMenu) {
       dispatch(closeSideMenu())
     }
+  }
+
+  const handleShowAll = (query) => {
+    router.push(`../job-details/${query}`)
+    closeMenu()
   }
 
   const handleCardPress = (item) => {
@@ -35,7 +40,7 @@ const Popularjobs = () => {
     dispatch(fetchPopularJobs({ 
       endpoint: 'search', 
       query: {
-        query: 'React developer',
+        query: jobQuery,
         num_pages: 1
       }
     }))
@@ -49,7 +54,11 @@ const Popularjobs = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Popular jobs</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            handleShowAll(jobQuery)
+          }}
+        >
           <Text style={styles.headerBtn}>Show all</Text>
         </TouchableOpacity>
       </View>
