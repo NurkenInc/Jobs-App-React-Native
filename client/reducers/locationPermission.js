@@ -1,23 +1,17 @@
 import {
   LOCATION_PERMISSION_REQUEST,
   LOCATION_PERMISSION_GRANTED,
-  LOCATION_PERMISSION_DENIED,
-  LOCATION_PERMISSION_UNDETERMINED,
   LOCATION_PERMISSION_FAILURE,
 } from '../constants/actionTypes'
 
 const initialState = {
   isLoading: false,
-  permission: {
-    granted: false,
-    denied: false,
-    undetermined: true
-  },
+  granted: false,
   error: null
 }
 
 const locationPermission = (state = initialState, action) => {
-  switch (action) {
+  switch (action.type) {
     case LOCATION_PERMISSION_REQUEST:
       return {
         ...state,
@@ -26,31 +20,8 @@ const locationPermission = (state = initialState, action) => {
     case LOCATION_PERMISSION_GRANTED:
       return {
         ...state,
-        permission: {
-          ...state.permission,
-          granted: true,
-          undetermined: false
-        },
+        granted: true,
         isLoading: false
-      }
-      case LOCATION_PERMISSION_DENIED:
-      return {
-        ...state,
-        isLoading: false,
-        permission: {
-          ...state.permission,
-          denied: true,
-          undetermined: false
-        },
-      }
-      case LOCATION_PERMISSION_UNDETERMINED:
-      return {
-        ...state,
-        isLoading: false,
-        permission: {
-          ...state.permission,
-          undetermined: true
-        }
       }
     case LOCATION_PERMISSION_FAILURE:
       return {
