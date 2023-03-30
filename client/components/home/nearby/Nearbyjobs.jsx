@@ -43,8 +43,8 @@ const Nearbyjobs = () => {
     }))
   }, 5000)
 
-  const fetchCountry = async ({ lat, lon }) => {
-    dispatch(geocodeLocation({ lat, lon }))
+  const fetchCountry = async ({ latitude, longitude }) => {
+    dispatch(geocodeLocation({ latitude, longitude }))
   }
 
   const fetchLocationPermission = () => {
@@ -68,26 +68,20 @@ const Nearbyjobs = () => {
 
   // TODO: rewrite useEffects to HOC
   useEffect(() => {
-    console.log(locationPermission.permission.granted)
-    if(locationPermission.permission.granted) {
+    if(locationPermission.granted) {
       fetchLocation()
     }
   }, [locationPermission.isLoading])
 
   useEffect(() => {
     if(Object.keys(location.data).length) {
-      // not calling getLocation
       fetchCountry(location.data)
     }
   }, [location.isLoading])
-
+  
+  
   useEffect(() => {
-    if(country.data) {
-      fetchJobs()
-    }
-  }, [country.isLoading])
-
-  useEffect(() => {
+    // may not get country on time when fetching jobs
     fetchLocationPermission()
     fetchJobs()
   }, [dispatch])
