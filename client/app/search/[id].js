@@ -25,7 +25,7 @@ const JobSearch = () => {
         setSearchLoader(true);
         setSearchResult([])
 
-        //
+        ////
         
         try {
             const options = {
