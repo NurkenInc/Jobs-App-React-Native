@@ -26,7 +26,7 @@ const Popularjobs = () => {
   }
 
   const handleShowAll = (query) => {
-    router.push(`../job-details/${query}`)
+    router.push(`../search/${query}`)
     closeMenu()
   }
 

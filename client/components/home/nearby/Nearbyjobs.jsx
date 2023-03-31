@@ -22,8 +22,7 @@ import { RAPID_GEOCODE_API_KEY } from '@env'
 const rapidGeocodeApiKey = RAPID_GEOCODE_API_KEY
 
 const Nearbyjobs = () => {
-  // const [country, setCountry] = useState('')
-  // const [location, setLocation] = useState({})
+  const [jobQuery, setJobQuery] = useState(`React Native developer`)
   const nearbyJobs = useSelector((state) => state.jobs.nearbyJobs)
   const country = useSelector((state) => state.country)
   const location = useSelector((state) => state.location)
@@ -37,7 +36,7 @@ const Nearbyjobs = () => {
     dispatch(fetchNearbyJobs({
       endpoint: 'search',
       query: {
-        query: `React Native developer ${country.data}`,
+        query: `${jobQuery} ${country.data}`,
         num_pages: 1
       }
     }))
@@ -59,6 +58,11 @@ const Nearbyjobs = () => {
     if (showSideMenu) {
       dispatch(closeSideMenu())
     }
+  }
+
+  const handleShowAll = (jobQuery) => {
+    router.push(`../search/${jobQuery}`)
+    closeMenu()
   }
 
   const handleCardPress = (job) => {
@@ -90,7 +94,9 @@ const Nearbyjobs = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Nearby jobs</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          handleShowAll(jobQuery)
+        }}>
           <Text style={styles.headerBtn}>Show all</Text>
         </TouchableOpacity>
       </View>
