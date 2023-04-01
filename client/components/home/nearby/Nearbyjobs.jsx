@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'expo-router'
 import { View, Text, TouchableOpacity } from 'react-native'
 import debounce from 'lodash.debounce'
-import * as Location from 'expo-location'
-import axios from 'axios'
 
 import styles from './nearbyjobs.style'
 
