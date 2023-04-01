@@ -26,7 +26,7 @@ export const geocodeLocation = ({ latitude, longitude }) => {
           polygon_threshold: '0.0'
         },
         headers: {
-          'X-RapidAPI-Key': 'c51f6600b7msh561acf480101e32p187e69jsn9decd40eb37e',
+          'X-RapidAPI-Key': rapidGeocodeApiKey,
           'X-RapidAPI-Host': 'forward-reverse-geocoding.p.rapidapi.com'
         }
       }
