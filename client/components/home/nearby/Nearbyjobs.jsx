@@ -17,10 +17,6 @@ import { getLocationPermission } from '../../../actions/locationPermission'
 import { getLocation } from '../../../actions/location'
 import { geocodeLocation } from '../../../actions/country'
 
-import { RAPID_GEOCODE_API_KEY } from '@env'
-
-const rapidGeocodeApiKey = RAPID_GEOCODE_API_KEY
-
 const Nearbyjobs = () => {
   const [jobQuery, setJobQuery] = useState(`React Native developer`)
   const nearbyJobs = useSelector((state) => state.jobs.nearbyJobs)
